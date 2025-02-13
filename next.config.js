@@ -38,17 +38,17 @@ const nextConfig = {
       },
       {
         protocol: 'http',
-        hostname: 'cdn.chickenrun.kro.kr',
+        hostname: 'cdn.born-to-run.kro.kr',
         port: '',
       },
       {
         protocol: 'https',
-        hostname: 'test.runacer2',
+        hostname: 'test.borntorun2',
         port: '',
       },
       {
         protocol: 'https',
-        hostname: 'test.runacer',
+        hostname: 'test.borntorun',
         port: '',
       },
     ],

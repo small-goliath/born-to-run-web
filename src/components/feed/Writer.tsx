@@ -3,8 +3,8 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-import NotProfileIcon from '../icon/commonIcon/runacerNotProfileIcon.svg';
 import AdminIcon from '../icon/commonIcon/adminIcon.svg';
+import NotProfileIcon from '../icon/commonIcon/borntorunNotProfileIcon.svg';
 import ManagerIcon from '../icon/commonIcon/managerIcon.svg';
 
 import { CommunityWriter } from '@/service/community';
