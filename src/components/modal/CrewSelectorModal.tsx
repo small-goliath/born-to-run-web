@@ -1,6 +1,6 @@
 import SolidButton from '../common/commonButton/SolidButton';
-import BottomModal from './BottomModal';
 import CommonSelector from '../common/CommonSelector';
+import BottomModal from './BottomModal';
 
 import { Crew } from '@/service/auth';
 import { SelectItem } from '@/types/common';
@@ -23,8 +23,9 @@ export default function CrewSelectorModal({
 }: Props) {
   const formatList = crewList.map((crew) => ({
     title: crew.crewName,
-    key: Number(crew.crewId),
+    key: Number(crew.id),
   }));
+  
   return (
     <BottomModal isActive={isActive} onClose={onClose} title="크루선택" closeType="back">
       <div className="flex flex-col gap-4">

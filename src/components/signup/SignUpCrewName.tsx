@@ -1,21 +1,21 @@
 'use client';
 
-import { useCallback, useState } from 'react';
 import { useModal } from '@/hooks/useModal';
+import { useCallback, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import SignUpLabel from './SignUpLabel';
-import ErrorMessage from '../common/ErrorMessage';
 import CommonInput from '../common/CommonInput';
+import ErrorMessage from '../common/ErrorMessage';
 import CrewSelectorModal from '../modal/CrewSelectorModal';
+import SignUpLabel from './SignUpLabel';
 
-import { SignUpForm } from './SignUpForm';
 import { Crew } from '@/service/auth';
 import { SelectItem } from '@/types/common';
+import { SignUpForm } from './SignUpForm';
 
 type Props = {
   crewList?: {
-    crews: Crew[];
+    crewDetails: Crew[];
   };
   selectorCheckType?: 'checkBox' | 'radioBox';
 };
@@ -76,9 +76,9 @@ export default function SignUpCrewName({ crewList }: Props) {
       />
       {crewNameErrorMessage && <ErrorMessage text={crewNameErrorMessage} />}
 
-      {crewList?.crews && (
+      {crewList?.crewDetails && (
         <CrewSelectorModal
-          crewList={crewList.crews}
+          crewList={crewList.crewDetails}
           handleSelectCrew={handleSelectCrew}
           handleSelectionComplete={handleSelectionComplete}
           isActive={modal.isVisible}

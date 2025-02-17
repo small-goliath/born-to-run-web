@@ -1,17 +1,17 @@
 'use client';
 
-import { FormProvider, useForm } from 'react-hook-form';
-import { useCallback, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import useAuth from '@/hooks/queries/useAuth';
 import { useModal } from '@/hooks/useModal';
 import { useLoginStateStore } from '@/store/useLoginStateStore';
+import { useRouter } from 'next/navigation';
+import { useCallback, useEffect } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 
-import SignUpUserName from './SignUpUserName';
-import SignUpCrewName from './SignUpCrewName';
-import SignUpInstaId from './SignUpInstaId';
 import SolidButton from '@/components/common/commonButton/SolidButton';
 import ErrorModal from '@/components/modal/ErrorModal';
+import SignUpCrewName from './SignUpCrewName';
+import SignUpInstaId from './SignUpInstaId';
+import SignUpUserName from './SignUpUserName';
 
 export type SignUpForm = {
   userName: string;
@@ -45,7 +45,7 @@ export default function SignUpForm() {
   const onSubmit = useCallback(
     (data: SignUpForm) => {
       const { crew, userName, instaId } = data;
-      const crewId = crewList?.crews.find((item) => item.crewName === crew)?.crewId;
+      const crewId = crewList?.crewDetails.find((item) => item.crewName === crew)?.id;
       if (!crewId || !userName) return;
 
       signUp.mutate({
@@ -54,7 +54,7 @@ export default function SignUpForm() {
         ...(instaId && { instagramId: instaId }),
       });
     },
-    [crewList?.crews, signUp]
+    [crewList?.crewDetails, signUp]
   );
 
   const isCrewNameError =

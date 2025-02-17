@@ -1,7 +1,7 @@
-import axios, { AxiosError } from 'axios';
-import HttpError from './httpError';
-import { api } from './httpClient';
 import { handleNetworkError } from '@/utils/handleNetworkError';
+import axios, { AxiosError } from 'axios';
+import { api } from './httpClient';
+import HttpError from './httpError';
 
 export const kakaoAuth = async () => {
   const result = await (await api.get('/users/kakao/auth-code')).data;
@@ -114,14 +114,14 @@ export const withDrawal = async () => {
 };
 
 type Crew = {
-  crewId: string;
+  id: string;
   crewName: string;
   crewImageUrl?: string;
   crewSnsUrl?: string;
 };
 
 type Crews = {
-  crews: Crew[];
+  crewDetails: Crew[];
 };
 
 export const crews = async () => {
@@ -129,4 +129,5 @@ export const crews = async () => {
   return result;
 };
 
-export type { SignUpData, SignOut, Crew, Crews };
+export type { Crew, Crews, SignOut, SignUpData };
+
