@@ -1,9 +1,8 @@
 'use client';
-
 import useAuth from '@/hooks/queries/useAuth';
 import { useModal } from '@/hooks/useModal';
 import { useLoginStateStore } from '@/store/useLoginStateStore';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
@@ -20,81 +19,88 @@ export type SignUpForm = {
 };
 
 export default function SignUpForm() {
-  console.log('signup form');
-  const modal = useModal();
-
-  const formMethods = useForm<SignUpForm>();
+  const searchParams = useSearchParams();
+  const isMember = searchParams.get('isMember');
   const router = useRouter();
-  const {
-    getCrewListQuery: { data: crewList, isError: isCrewListError },
-  } = useAuth();
 
-  const onSignUpError = () => {
-    modal.show();
-  };
+  if (isMember === 'true') {
+    router.replace('/');
+  } else {
+    console.log('signup form');
+    const modal = useModal();
 
-  const { signUp } = useAuth(null, { onError: onSignUpError });
-  const { loginState } = useLoginStateStore();
+    const formMethods = useForm<SignUpForm>();
+    const {
+      getCrewListQuery: { data: crewList, isError: isCrewListError },
+    } = useAuth();
 
-  const formErrors = formMethods.formState.errors;
+    const onSignUpError = () => {
+      modal.show();
+    };
 
-  useEffect(() => {
-    if (isCrewListError) modal.show();
-  }, [isCrewListError, modal]);
+    const { signUp } = useAuth(null, { onError: onSignUpError });
+    const { loginState } = useLoginStateStore();
 
-  const onSubmit = useCallback(
-    (data: SignUpForm) => {
-      const { crew, userName, instaId } = data;
-      const crewId = crewList?.crewDetails.find((item) => item.crewName === crew)?.id;
-      if (!crewId || !userName) return;
+    const formErrors = formMethods.formState.errors;
 
-      signUp.mutate({
-        crewId: Number(crewId),
-        userName,
-        ...(instaId && { instagramId: instaId }),
-      });
-    },
-    [crewList?.crewDetails, signUp]
-  );
+    useEffect(() => {
+      if (isCrewListError) modal.show();
+    }, [isCrewListError, modal]);
 
-  const isCrewNameError =
-    !!formErrors.crew?.type || formMethods.getValues('crew') === '' || !formMethods.getValues('crew');
-  const isUserNameError = !!formErrors.userName?.type || !formMethods.getValues('userName');
-  const isIstaError = !!formErrors.instaId?.type;
+    const onSubmit = useCallback(
+      (data: SignUpForm) => {
+        const { crew, userName, instaId } = data;
+        const crewId = crewList?.crewDetails.find((item) => item.crewName === crew)?.id;
+        if (!crewId || !userName) return;
 
-  const buttonDisabled = isCrewNameError || isUserNameError || isIstaError;
+        signUp.mutate({
+          crewId: Number(crewId),
+          userName,
+          ...(instaId && { instagramId: instaId }),
+        });
+      },
+      [crewList?.crewDetails, signUp]
+    );
 
-  return (
-    <div>
-      {isCrewListError && (
-        <ErrorModal
-          isActive={modal.isVisible}
-          isHome
-          backHomeText="네트워크 장애가 발생하였습니다."
-          closeModal={modal.hide}
-        />
-      )}
-      {signUp.isError ? (
-        <ErrorModal isHome isActive={modal.isVisible} backHomeText="회원가입 실패하였습니다." closeModal={modal.hide} />
-      ) : (
-        <FormProvider {...formMethods}>
-          <form onSubmit={formMethods.handleSubmit(onSubmit)} className="space-y-6 ">
-            <SignUpUserName />
-            <SignUpCrewName crewList={crewList} />
-            <SignUpInstaId />
+    const isCrewNameError =
+      !!formErrors.crew?.type || formMethods.getValues('crew') === '' || !formMethods.getValues('crew');
+    const isUserNameError = !!formErrors.userName?.type || !formMethods.getValues('userName');
+    const isIstaError = !!formErrors.instaId?.type;
 
-            <div className="absolute bottom-4 m-auto left-0 right-0">
-              <SolidButton
-                title="가입 완료"
-                type="submit"
-                disabled={buttonDisabled}
-                height={'h-[3.5rem]'}
-                isLoading={signUp.isPending}
-              />
-            </div>
-          </form>
-        </FormProvider>
-      )}
-    </div>
-  );
+    const buttonDisabled = isCrewNameError || isUserNameError || isIstaError;
+
+    return (
+      <div>
+        {isCrewListError && (
+          <ErrorModal
+            isActive={modal.isVisible}
+            isHome
+            backHomeText="네트워크 장애가 발생하였습니다."
+            closeModal={modal.hide}
+          />
+        )}
+        {signUp.isError ? (
+          <ErrorModal isHome isActive={modal.isVisible} backHomeText="회원가입 실패하였습니다." closeModal={modal.hide} />
+        ) : (
+          <FormProvider {...formMethods}>
+            <form onSubmit={formMethods.handleSubmit(onSubmit)} className="space-y-6 ">
+              <SignUpUserName />
+              <SignUpCrewName crewList={crewList} />
+              <SignUpInstaId />
+
+              <div className="absolute bottom-4 m-auto left-0 right-0">
+                <SolidButton
+                  title="가입 완료"
+                  type="submit"
+                  disabled={buttonDisabled}
+                  height={'h-[3.5rem]'}
+                  isLoading={signUp.isPending}
+                />
+              </div>
+            </form>
+          </FormProvider>
+        )}
+      </div>
+    );
+  }
 }

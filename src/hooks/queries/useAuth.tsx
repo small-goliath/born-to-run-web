@@ -7,16 +7,15 @@ import { setCookie } from 'cookies-next';
 import { UseMutationCustomOption, UseQueryCustomOption } from '@/types/common';
 import { Crews, SignUpData, crews, signIn, signUp } from '@/service/auth';
 import { ACCESS_TOKEN } from '@/service/httpClient';
-import { SignIn } from '@/service/auth';
 
-function useKakaoLogin(mutationOptions?: UseMutationCustomOption, authCode?: string | null, data?: SignIn | null) {
+function useKakaoLogin(mutationOptions?: UseMutationCustomOption, authCode?: string | null) {
   const router = useRouter();
   const { setLoginState } = useLoginStateStore();
   const { addToast } = useToastStore();
 
   return useMutation({
     mutationFn: (code: string) => signIn(code),
-    onSuccess: () => {
+    onSuccess: (data) => {
       if (data) {
         setLoginState({ authCode });
         if (data.isMember) {
