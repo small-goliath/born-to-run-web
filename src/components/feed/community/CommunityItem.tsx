@@ -1,14 +1,14 @@
 'use client';
 
-import { useCallback, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { useModal } from '@/hooks/useModal';
+import { useRouter } from 'next/navigation';
+import { useCallback, useEffect } from 'react';
 
 import ImageSlider from '../ImageSlider';
-import Writer from '../Writer';
-import Contents from './Contents';
-import ActionGroup from './ActionGroup';
 import NotContent from '../NotContent';
+import Writer from '../Writer';
+import ActionGroup from './ActionGroup';
+import Contents from './Contents';
 
 import { CommunityContent } from '@/service/community';
 import { ServerError } from '@/types/common';
@@ -43,11 +43,11 @@ export default function CommunityItem({ feed, handleFeedLike, feedLikeError, isL
   const handleFeedLikeButton = useCallback(() => {
     if (!isLoggedIn || isUserError) return modal.show();
 
-    if (handleFeedLike && feed.feedId) {
-      handleFeedLike(feed.feedId);
+    if (handleFeedLike && feed.id) {
+      handleFeedLike(feed.id);
     }
     modal.hide();
-  }, [feed.feedId, handleFeedLike, isLoggedIn, isUserError, modal]);
+  }, [feed.id, handleFeedLike, isLoggedIn, isUserError, modal]);
 
   useEffect(() => {
     if ((feedLikeError && feedLikeError.statusCode === 401) || isUserError) {
@@ -82,7 +82,7 @@ export default function CommunityItem({ feed, handleFeedLike, feedLikeError, isL
               hasComment={feed?.viewer?.hasMyComment}
               hasMyRecommendation={feed?.viewer?.hasMyRecommendation}
               handleFeedLikeButton={handleFeedLikeButton}
-              onDetailFeedPage={() => onDetailFeedPage(feed?.feedId)}
+              onDetailFeedPage={() => onDetailFeedPage(feed?.id)}
             />
           </div>
         </article>

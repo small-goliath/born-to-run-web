@@ -1,12 +1,12 @@
 'use client';
 
 import { useGetCommentList } from '@/hooks/queries/community/useComment';
-import { useRetryHandler } from '@/hooks/useRetryHandler';
 import { useModal } from '@/hooks/useModal';
+import { useRetryHandler } from '@/hooks/useRetryHandler';
 import { useEffect } from 'react';
 
-import Comment from './Comment';
 import ErrorModal from '../../../modal/ErrorModal';
+import Comment from './Comment';
 import ReComment from './ReComment';
 
 type Props = {
@@ -29,12 +29,12 @@ export default function CommentList({ feedId }: Props) {
     <div>
       <ul>
         {commentList?.comments.map((comment) => (
-          <div key={comment.commentId}>
+          <div key={comment.id}>
             {comment.isReComment ? (
               <ReComment
                 feedId={feedId}
                 commentDate={comment.registeredAt}
-                commentId={comment.commentId}
+                commentId={comment.id}
                 contents={comment.contents}
                 isMyComment={comment.isMyComment}
                 writer={comment.writer}
@@ -43,7 +43,7 @@ export default function CommentList({ feedId }: Props) {
               <Comment
                 feedId={feedId}
                 commentDate={comment.registeredAt}
-                commentId={comment.commentId}
+                commentId={comment.id}
                 contents={comment.contents}
                 writer={comment.writer}
                 isMyComment={comment.isMyComment}

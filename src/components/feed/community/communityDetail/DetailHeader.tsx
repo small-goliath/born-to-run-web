@@ -3,11 +3,11 @@
 import { useModal } from '@/hooks/useModal';
 
 import PageHeader from '@/components/header/PageHeader';
+import FeedShareIcon from '@/components/icon/commonIcon/FeedShareIcon';
+import { CommunityDetail } from '@/service/community';
+import Share from '../../Share';
 import DetailLike from './DetailLike';
 import DetailMoreView from './DetailMoreView';
-import Share from '../../Share';
-import { CommunityDetail } from '@/service/community';
-import FeedShareIcon from '@/components/icon/commonIcon/FeedShareIcon';
 
 type Props = {
   feedInfo?: CommunityDetail;
@@ -24,7 +24,7 @@ export default function DetailHeader({ feedInfo }: Props) {
           <FeedShareIcon onShare={shareModal.show} />
         </li>
         <li className="w-10 h-10 flex justify-center items-center">
-          <DetailLike isMyRecommendation={feedInfo?.viewer.hasMyRecommendation} feedId={feedInfo?.feedId} />
+          <DetailLike isMyRecommendation={feedInfo?.viewer.hasMyRecommendation} feedId={feedInfo?.id} />
         </li>
         <li>
           <DetailMoreView feedContent={feedInfo?.contents} feedWriter={feedInfo?.writer.userName} />

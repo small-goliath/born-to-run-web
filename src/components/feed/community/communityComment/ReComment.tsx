@@ -8,14 +8,14 @@ import { CommentWriter } from '@/service/comment';
 
 type Props = {
   feedId?: number;
-  commentId: number;
+  id: number;
   writer: CommentWriter;
   contents: string;
   commentDate: Date;
   isMyComment: boolean;
 };
 
-export default function ReComment({ feedId, commentDate, commentId, contents, isMyComment, writer }: Props) {
+export default function ReComment({ feedId, commentDate, id, contents, isMyComment, writer }: Props) {
   const onProfilePage = () => {};
 
   return (
@@ -23,7 +23,7 @@ export default function ReComment({ feedId, commentDate, commentId, contents, is
       <CommentLeftBar />
 
       <div className="py-2">
-        <Link href={`/community/detail/${feedId}/comment/${commentId}`}>
+        <Link href={`/community/detail/${feedId}/comment/${id}`}>
           <div className="space-y-2 mb-2">
             <Writer writerInfo={writer} onProfilePage={onProfilePage} registeredAt={commentDate} />
           </div>

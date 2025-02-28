@@ -1,19 +1,19 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
 import { useReport } from '@/hooks/queries/community/useReport';
 import { useModal } from '@/hooks/useModal';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useCallback, useEffect, useState } from 'react';
 
-import CreateContent from '../CreateContent';
-import TextButton from '../../../common/commonButton/TextButton';
-import SolidButton from '../../../common/commonButton/SolidButton';
-import ErrorModal from '../../../modal/ErrorModal';
-import LoginModal from '../../../signup/LoginModal';
-import { CommentAll, CommentDetailContent } from '@/service/comment';
-import { CommunityDetail } from '@/service/community';
 import { queryKeys } from '@/constants';
 import { queryClient } from '@/QueryProvider';
+import { CommentAll, CommentDetailContent } from '@/service/comment';
+import { CommunityDetail } from '@/service/community';
+import SolidButton from '../../../common/commonButton/SolidButton';
+import TextButton from '../../../common/commonButton/TextButton';
+import ErrorModal from '../../../modal/ErrorModal';
+import LoginModal from '../../../signup/LoginModal';
+import CreateContent from '../CreateContent';
 
 type ReportForm = {
   reportName: string;
@@ -44,7 +44,7 @@ export default function ReportForm() {
     reportCommentType === 'list'
       ? queryClient
           .getQueryData<CommentAll>([queryKeys.COMMENT.ALL, reportFeedId])
-          ?.comments.find((comment) => comment.commentId === reportCommentId)
+          ?.comments.find((comment) => comment.id === reportCommentId)
       : undefined;
 
   const reportComment = reportCommentDetailTarget || reportCommentListTarget;

@@ -10,10 +10,10 @@ export default function ReCommentList({ reComments, feedId }: Props) {
   return (
     <ul>
       {reComments.map((comment) => (
-        <li key={comment.commentId} className="pt-2">
+        <li key={comment.id} className="pt-2">
           <div>
             <Comment
-              commentId={comment.commentId}
+              commentId={comment.id}
               commentDate={comment.registeredAt}
               contents={comment.contents}
               writer={comment.writer}

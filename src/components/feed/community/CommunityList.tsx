@@ -1,24 +1,24 @@
 'use client';
 
-import React, { useCallback, useEffect, useState } from 'react';
 import { useCommunityListLike } from '@/hooks/queries/community/useCommunityLike';
-import { useSearchParams } from 'next/navigation';
-import { useRetryHandler } from '@/hooks/useRetryHandler';
 import { useGetInfiniteCommunity } from '@/hooks/queries/community/useInfiniteCommunity';
-import { useInfiniteScroll } from '@/hooks/useScrollPosition';
 import { useModal } from '@/hooks/useModal';
+import { useRetryHandler } from '@/hooks/useRetryHandler';
+import { useInfiniteScroll } from '@/hooks/useScrollPosition';
+import { useSearchParams } from 'next/navigation';
+import React, { useCallback, useEffect, useState } from 'react';
 
-import ErrorModal from '../../modal/ErrorModal';
-import CommunityItem from './CommunityItem';
-import CommonDivider from '../../common/CommonDivider';
-import NotContent from '../NotContent';
-import CrewPublicSelector from '../CrewPublicSelector';
-import { CrewPublic, CommunityAllArgs } from '@/service/community';
+import { queryKeys } from '@/constants';
+import { HeaderTab } from '@/data';
+import { CommunityAllArgs, CrewPublic } from '@/service/community';
 import { ACCESS_TOKEN } from '@/service/httpClient';
 import { User } from '@/service/user';
 import { getCookie } from 'cookies-next';
-import { queryKeys } from '@/constants';
-import { HeaderTab } from '@/data';
+import CommonDivider from '../../common/CommonDivider';
+import ErrorModal from '../../modal/ErrorModal';
+import CrewPublicSelector from '../CrewPublicSelector';
+import NotContent from '../NotContent';
+import CommunityItem from './CommunityItem';
 
 type Props = {
   headerTab: HeaderTab;
@@ -113,10 +113,10 @@ export default function CommunityList({ headerTab, isLoggedIn, isUserError }: Pr
           <ul>
             {feeds?.pages.map((page, pageIndex) =>
               page.content.map((feed, feedIndex) => (
-                <React.Fragment key={feed.feedId}>
+                <React.Fragment key={feed.id}>
                   <CommunityItem
                     feed={feed}
-                    handleFeedLike={() => handleFeedLike(feed.feedId, pageIndex)}
+                    handleFeedLike={() => handleFeedLike(feed.id, pageIndex)}
                     feedLikeError={feedLikeError}
                     isLoggedIn={isLoggedIn}
                     isUserError={isUserError}

@@ -1,18 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
 import { useEditComment, useGetCommentInfo } from '@/hooks/queries/community/useComment';
 import { useModal } from '@/hooks/useModal';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 import SolidButton from '@/components/common/commonButton/SolidButton';
 import CreateContent from '@/components/feed/community/CreateContent';
 import PageHeader from '@/components/header/PageHeader';
-import LoginModal from '@/components/signup/LoginModal';
 import ErrorModal from '@/components/modal/ErrorModal';
-import { CommentDetailContent } from '@/service/comment';
+import LoginModal from '@/components/signup/LoginModal';
 import { queryKeys } from '@/constants';
 import { queryClient } from '@/QueryProvider';
+import { CommentDetailContent } from '@/service/comment';
 
 export default function CommentEditForm() {
   const pathName = usePathname().split('/');
@@ -58,7 +58,7 @@ export default function CommentEditForm() {
   const onSubmit = () => {
     if (!contents || contents === '' || isCommentEditLoading) return;
     commentEditMutate({
-      commentId,
+      id: commentId,
       contents,
     });
   };

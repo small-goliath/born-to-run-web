@@ -1,7 +1,8 @@
-import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { useToastStore } from '@/store/toastStore';
+import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
+import { number, queryKeys } from '@/constants';
 import { queryClient } from '@/QueryProvider';
 import {
   CommentAll,
@@ -14,7 +15,6 @@ import {
   commentUpdate,
 } from '@/service/comment';
 import { ServerError, UseMutationCustomOption, UseQueryCustomOption } from '@/types/common';
-import { number, queryKeys } from '@/constants';
 
 function useDeleteCommentInList(
   { commentId, feedId }: { commentId: number; feedId: number },
@@ -70,7 +70,7 @@ type CreateCommentArgs = {
 function useCreateComment({ feedId, parentCommentId }: CreateCommentArgs, mutationOptions?: UseMutationCustomOption) {
   return useMutation<void, ServerError, CreateComment>({
     mutationKey: [queryKeys.COMMENT.POST],
-    mutationFn: ({ contents }) => commentPost({ contents, feedId, commentId: parentCommentId }),
+    mutationFn: ({ contents }) => commentPost({ contents, feedId, id: parentCommentId }),
     onSuccess: () => {
       queryClient.invalidateQueries({
         predicate: (query) => {
@@ -141,10 +141,6 @@ function useEditComment(queryIds: EditCommentQueryIds, mutationOptions?: UseMuta
 
 export {
   useCreateComment,
-  useDeleteComment,
-  useGetCommentDetail,
-  useGetCommentList,
-  useGetCommentInfo,
-  useEditComment,
-  useDeleteCommentInList,
+  useDeleteComment, useDeleteCommentInList, useEditComment, useGetCommentDetail, useGetCommentInfo, useGetCommentList
 };
+

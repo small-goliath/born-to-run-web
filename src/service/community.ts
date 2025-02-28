@@ -1,5 +1,5 @@
-import HttpError from './httpError';
 import { api } from './httpClient';
+import HttpError from './httpError';
 
 export const communityAll = async ({ ...data }: CommunityAllArgs) => {
   const { category, myCrew, searchKeyword, lastFeedId, token } = data;
@@ -31,14 +31,14 @@ export const communityDetail = async (feedId: number) => {
 export const communityLike = async (feedId: number) => {
   if (!feedId) throw new HttpError(400, '올바르지 않은 게시판입니다.');
   return await (
-    await api.post<Promise<void>>(`/recommendation/FEED/${feedId}`)
+    await api.post<Promise<void>>(`/recommendations/FEED/${feedId}`)
   ).data;
 };
 
 export const communityDeleteLike = async (feedId: number) => {
   if (!feedId) throw new HttpError(400, '올바르지 않은 게시판입니다.');
   return await (
-    await api.delete<Promise<void>>(`/recommendation/FEED/${feedId}`)
+    await api.delete<Promise<void>>(`/recommendations/FEED/${feedId}`)
   ).data;
 };
 
@@ -70,7 +70,7 @@ export const communityUpdate = async ({ feedId, ...rest }: CommunityUpdateArgs) 
 };
 
 export type CommunityDetail = {
-  feedId: number;
+  id: number;
   contents: string;
   images: [
     {
@@ -106,7 +106,7 @@ export type CommunityWriter = {
 };
 
 export type CommunityContent = {
-  feedId: number;
+  id: number;
   imageUris: string[];
   contents: string;
   viewQty: number;

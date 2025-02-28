@@ -2,11 +2,11 @@ import { queryKeys } from '@/constants';
 import { CommunityAll, CommunityAllArgs, communityAll } from '@/service/community';
 import { ServerError } from '@/types/common';
 import {
-  InfiniteData,
-  QueryKey,
-  UseInfiniteQueryOptions,
-  keepPreviousData,
-  useInfiniteQuery,
+    InfiniteData,
+    QueryKey,
+    UseInfiniteQueryOptions,
+    keepPreviousData,
+    useInfiniteQuery,
 } from '@tanstack/react-query';
 
 type CommunityUpdateKey = {
@@ -42,7 +42,7 @@ function useGetInfiniteCommunity(
     getNextPageParam: (lastPage) => {
       const lastBoardIndex = lastPage.content.length - 1;
       if (lastPage.content.length > 0 && !lastPage.last) {
-        return lastPage.content[lastBoardIndex].feedId;
+        return lastPage.content[lastBoardIndex].id;
       }
       return;
     },

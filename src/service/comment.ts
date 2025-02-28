@@ -7,7 +7,7 @@ export const commentAll = async (feedId: number) => {
 
 type CommentPost = {
   feedId: number;
-  commentId?: number;
+  id?: number;
   contents: string;
 };
 
@@ -17,7 +17,7 @@ export const commentDetail = async (commentId: number | null) => {
   return result;
 };
 
-export const commentPost = async ({ feedId, commentId, contents }: CommentPost) => {
+export const commentPost = async ({ feedId, id: commentId, contents }: CommentPost) => {
   const result = await (
     await api.post(`/comments/${feedId}`, { contents, ...(commentId && { parentCommentId: commentId }) })
   ).data;
@@ -25,11 +25,11 @@ export const commentPost = async ({ feedId, commentId, contents }: CommentPost) 
 };
 
 export type CommentUpdate = {
-  commentId: number;
+  id: number;
   contents: string;
 };
 
-export const commentUpdate = async ({ commentId, contents }: CommentUpdate) => {
+export const commentUpdate = async ({ id: commentId, contents }: CommentUpdate) => {
   const result = await (await api.put(`/comments/${commentId}`, { contents })).data;
   return result;
 };
@@ -41,7 +41,7 @@ export const commentDelete = async (commentId?: number) => {
 };
 
 export type CommentDetailContent = {
-  commentId: number;
+  id: number;
   writer: CommentWriter;
   contents: string;
   registeredAt: Date;
@@ -49,7 +49,7 @@ export type CommentDetailContent = {
 };
 
 export type ReComment = {
-  commentId: number;
+  id: number;
   userId: number;
   contents: string;
   registeredAt: Date;
@@ -67,7 +67,7 @@ export type CommentWriter = {
 };
 
 export type CommentContent = {
-  commentId: number;
+  id: number;
   parentId: number;
   writer: CommentWriter;
   contents: string;
@@ -82,7 +82,7 @@ export type CommentAll = {
 
 export type Comment = {
   reCommentQty: number;
-  commentId: number;
+  id: number;
   parentId: number;
   writer: CommentWriter;
   contents: string;

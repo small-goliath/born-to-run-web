@@ -2,8 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCallback, useState } from 'react';
 import useUser from '../../useUser';
 
-import { CommunityAll, CommunityContent, communityDeleteLike, communityLike } from '@/service/community';
 import { queryKeys } from '@/constants';
+import { CommunityAll, CommunityContent, communityDeleteLike, communityLike } from '@/service/community';
 import { ServerError } from '@/types/common';
 
 type FeedData = {
@@ -53,7 +53,7 @@ export const useCommunityListLike = (queryKey: (string | boolean | undefined | n
       setIsMutating(true);
       queryClient.setQueryData(filterUndefinedQueryKey, (oldPages: FeedData) => {
         const newPages = oldPages ? [...oldPages.pages] : [];
-        const targetFeed = newPages[pageIndex]?.content.find((feed) => feed.feedId === feedId);
+        const targetFeed = newPages[pageIndex]?.content.find((feed) => feed.id === feedId);
         if (targetFeed) {
           if (targetFeed.viewer.hasMyRecommendation) {
             targetFeed.recommendationQty -= 1;
