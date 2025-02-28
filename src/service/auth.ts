@@ -129,5 +129,5 @@ export const crews = async () => {
   return result;
 };
 
-export type { Crew, Crews, SignOut, SignUpData };
+export type { Crew, Crews, SignOut, SignUpData, SignIn };
 

@@ -1,6 +1,6 @@
-import KakaoLoginIcon from '../icon/kakaoLoginIcon.svg';
-import CloseIcon from '../icon/commonIcon/CloseIcon';
 import Link from 'next/link';
+import CloseIcon from '../icon/commonIcon/CloseIcon';
+import KakaoLoginIcon from '../icon/kakaoLoginIcon.svg';
 
 type Props = {
   closeModal: () => void;
@@ -19,16 +19,16 @@ export default function LoginKakaoModal({ closeModal }: Props) {
       </div>
 
       <div className="text-center space-y-2 py-4">
-        <h2 className="text-secondary-N900 text-headLine-md font-bold leading-headLine-md">런에이서와 함께 뛰어요!</h2>
+        <h2 className="text-secondary-N900 text-headLine-md font-bold leading-headLine-md">본투런과 함께 뛰어요!</h2>
         <p className="text-secondary-N90 text-body-lg font-regular leading-body-lg tracking-body-lg">
-          반가워요! 러네이서 회원이 되어 간편한 러닝 모임
+          반가워요! 본투런 회원이 되어 간편한 러닝 모임
           <br />
           관리와 러너들과의 소통을 경험해보세요!
         </p>
       </div>
 
       <Link
-        href={`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users/kakao/auth-code`}
+        href={`${process.env.NEXT_PUBLIC_BASE_URL}/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/auth/signup`}
         className="mt-4 mb-[10.25rem] px-4 bg-[#FEE500] h-14 w-full flex justify-center items-center space-x-2 rounded-xl m-auto"
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

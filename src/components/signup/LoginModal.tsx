@@ -1,14 +1,14 @@
 'use client';
 
-import React, { useCallback, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import React, { useCallback, useState } from 'react';
 
-import Modal from '../modal/Modal';
-import LoginKakaoModal from './LoginKakaoModal';
 import TextButton from '../common/commonButton/TextButton';
-import ModalTitle from '../modal/ModalTitle';
+import Modal from '../modal/Modal';
 import ModalSubTitle from '../modal/ModalSubTitle';
+import ModalTitle from '../modal/ModalTitle';
 import ModalWrapper from '../modal/ModalWrapper';
+import LoginKakaoModal from './LoginKakaoModal';
 
 type Props = {
   isLoginModal: boolean;
@@ -50,7 +50,7 @@ export default function LoginModal({ closeLogin, isLoginModal, reFetchData, back
             <div className="space-y-4">
               <div className="space-y-2">
                 <ModalTitle title="로그인이 필요해요." />
-                <ModalSubTitle subTitle="런에이서 회원이 되면 러닝 모임 관리와 소통이 훨씬 간편해져요!" />
+                <ModalSubTitle subTitle="본투런 회원이 되면 러닝 모임 관리와 소통이 훨씬 간편해져요!" />
               </div>
 
               <div className="flex items-center justify-center gap-2">
