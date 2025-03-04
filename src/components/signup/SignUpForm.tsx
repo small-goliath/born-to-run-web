@@ -22,12 +22,12 @@ export default function SignUpForm() {
   const searchParams = useSearchParams();
   const isMember = searchParams.get('isMember');
   const router = useRouter();
+  const modal = useModal();
 
   if (isMember === 'true') {
     router.replace('/');
   } else {
     console.log('signup form');
-    const modal = useModal();
 
     const formMethods = useForm<SignUpForm>();
     const {
