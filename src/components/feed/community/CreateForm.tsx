@@ -1,22 +1,22 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import useUser from '@/hooks/useUser';
 import { useCreateCommunityFeed } from '@/hooks/queries/community/useCommunity';
 import { useModal } from '@/hooks/useModal';
+import useUser from '@/hooks/useUser';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useCallback, useEffect, useState } from 'react';
 
-import CommonDivider from '@/components/common/CommonDivider';
-import CommunityTypeSelector from '../CommunityTypeSelector';
-import CreateContent from './CreateContent';
-import ErrorModal from '@/components/modal/ErrorModal';
-import PageHeader from '@/components/header/PageHeader';
 import SolidButton from '@/components/common/commonButton/SolidButton';
+import CommonDivider from '@/components/common/CommonDivider';
+import PageHeader from '@/components/header/PageHeader';
+import ErrorModal from '@/components/modal/ErrorModal';
 import LoginModal from '@/components/signup/LoginModal';
-import PhotoSelector, { UploadFileState } from '../PhotoSelector';
-import CrewPublicSelector from '../CrewPublicSelector';
-import { CrewPublic } from '@/service/community';
 import { HOME_HEADER_TABS, HeaderTab } from '@/data';
+import { CrewPublic } from '@/service/community';
+import CommunityTypeSelector from '../CommunityTypeSelector';
+import CrewPublicSelector from '../CrewPublicSelector';
+import PhotoSelector, { UploadFileState } from '../PhotoSelector';
+import CreateContent from './CreateContent';
 
 export default function CreateForm() {
   const { isLoggedIn, isUserError } = useUser();
@@ -95,7 +95,7 @@ export default function CreateForm() {
       </PageHeader>
       <div className="mt-2 w-full flex justify-between">
         <CommunityTypeSelector feedCategory={feedCategory} setFeedCategory={setFeedCategory} />
-        <CrewPublicSelector handleCheck={handleCheck} isCrewPublic={isCrewPublic} />
+        <CrewPublicSelector handleCheck={handleCheck} isCrewPublic={isCrewPublic} isLoggedIn={isLoggedIn} isUserError={isUserError}/>
       </div>
 
       <div className="my-2">

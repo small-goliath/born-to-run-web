@@ -14,17 +14,20 @@ type Props = {
 
 export default function CrewPublicSelector({ handleCheck, isCrewPublic, isLoggedIn, isUserError }: Props) {
   const loginModal = useModal();
-
   const handleCheckBox = () => {
-    if (isUserError || !isLoggedIn) return loginModal.show();
-    handleCheck();
+    if (isUserError || !isLoggedIn) {
+      return loginModal.show();
+    } else {
+      handleCheck();
+      return loginModal.hide();
+    };
   };
 
   return (
     <div className="flex items-center space-x-2 px-4 h-10">
       <CommonCheckBox type="sm" handleCheck={handleCheckBox} isChecked={isCrewPublic} />
       <span>크루만 공개 하기</span>
-      <LoginModal isLoginModal={loginModal.isVisible} closeLogin={loginModal.hide} />
+      <LoginModal closeLogin={loginModal.hide} isLoginModal={loginModal.isVisible} />
     </div>
   );
 }

@@ -1,26 +1,31 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
 import { useEditCommunityFeed } from '@/hooks/queries/community/useCommunity';
 import { useModal } from '@/hooks/useModal';
 import { queryClient } from '@/QueryProvider';
+import { usePathname, useRouter } from 'next/navigation';
+import { useCallback, useEffect, useState } from 'react';
 
-import PhotoSelector, { UploadFileState } from '../PhotoSelector';
 import SolidButton from '@/components/common/commonButton/SolidButton';
-import PageHeader from '@/components/header/PageHeader';
-import CrewPublicSelector from '../CrewPublicSelector';
-import CommunityTypeSelector from '../CommunityTypeSelector';
 import CommonDivider from '@/components/common/CommonDivider';
-import CreateContent from './CreateContent';
-import LoginModal from '@/components/signup/LoginModal';
+import PageHeader from '@/components/header/PageHeader';
 import ErrorModal from '@/components/modal/ErrorModal';
+import LoginModal from '@/components/signup/LoginModal';
+import CommunityTypeSelector from '../CommunityTypeSelector';
+import CrewPublicSelector from '../CrewPublicSelector';
+import PhotoSelector, { UploadFileState } from '../PhotoSelector';
+import CreateContent from './CreateContent';
 
-import { CrewPublic, CommunityDetail } from '@/service/community';
 import { queryKeys } from '@/constants';
 import { HeaderTab } from '@/data';
+import { CommunityDetail, CrewPublic } from '@/service/community';
 
-export default function EditForm() {
+type Props = {
+  isLoggedIn?: boolean;
+  isUserError?: boolean;
+};
+
+export default function EditForm({isLoggedIn, isUserError}: Props) {
   const router = useRouter();
   const pathName = usePathname();
   const modal = useModal();
@@ -114,7 +119,7 @@ export default function EditForm() {
 
       <div className="w-full flex justify-between items-center mt-1">
         <CommunityTypeSelector feedCategory={feedCategory} setFeedCategory={handleFeedCategory} />
-        <CrewPublicSelector isCrewPublic={accessLevel === 'IN_CREW'} handleCheck={handleChecked} />
+        <CrewPublicSelector isCrewPublic={accessLevel === 'IN_CREW'} handleCheck={handleChecked} isLoggedIn={isLoggedIn} isUserError={isUserError}/>
       </div>
 
       <div className="my-2">

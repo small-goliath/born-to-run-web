@@ -1,19 +1,19 @@
 'use client';
 
+import { useModal } from '@/hooks/useModal';
 import useUser from '@/hooks/useUser';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useCallback, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useModal } from '@/hooks/useModal';
 
-import LoginModal from '@/components/signup/LoginModal';
-import FeedSearchForm, { SearchForm } from './FeedSearchForm';
-import PageHeader from '@/components/header/PageHeader';
-import CommunityList from '../community/CommunityList';
 import CommonDivider from '@/components/common/CommonDivider';
-import SearchHeader from './SearchHeader';
+import PageHeader from '@/components/header/PageHeader';
+import LoginModal from '@/components/signup/LoginModal';
 import { HeaderTab } from '@/data';
+import CommunityList from '../community/CommunityList';
 import CommunitySkeleton from '../community/CommunitySkeleton';
+import FeedSearchForm, { SearchForm } from './FeedSearchForm';
+import SearchHeader from './SearchHeader';
 
 interface Props {
   searchHeaderTabs: HeaderTab[];
