@@ -23,45 +23,41 @@ export default function SignUpForm() {
   const isMember = searchParams.get('isMember');
   const router = useRouter();
   const modal = useModal();
+  const formMethods = useForm<SignUpForm>();
+  const {
+    getCrewListQuery: { data: crewList, isError: isCrewListError },
+  } = useAuth();
+  const onSignUpError = () => {
+    modal.show();
+  };
+  const { signUp } = useAuth(null, { onError: onSignUpError });
+  const { loginState } = useLoginStateStore();
+  useEffect(() => {
+    if (isCrewListError) modal.show();
+  }, [isCrewListError, modal]);
+
+  const onSubmit = useCallback(
+    (data: SignUpForm) => {
+      const { crew, userName, instaId } = data;
+      const crewId = crewList?.crewDetails.find((item) => item.crewName === crew)?.id;
+      if (!crewId || !userName) return;
+
+      signUp.mutate({
+        crewId: Number(crewId),
+        userName,
+        ...(instaId && { instagramId: instaId }),
+      });
+    },
+    [crewList?.crewDetails, signUp]
+  );
 
   if (isMember === 'true') {
+    console.log('signup form exit!');
     router.replace('/');
   } else {
     console.log('signup form');
-
-    const formMethods = useForm<SignUpForm>();
-    const {
-      getCrewListQuery: { data: crewList, isError: isCrewListError },
-    } = useAuth();
-
-    const onSignUpError = () => {
-      modal.show();
-    };
-
-    const { signUp } = useAuth(null, { onError: onSignUpError });
-    const { loginState } = useLoginStateStore();
-
+    
     const formErrors = formMethods.formState.errors;
-
-    useEffect(() => {
-      if (isCrewListError) modal.show();
-    }, [isCrewListError, modal]);
-
-    const onSubmit = useCallback(
-      (data: SignUpForm) => {
-        const { crew, userName, instaId } = data;
-        const crewId = crewList?.crewDetails.find((item) => item.crewName === crew)?.id;
-        if (!crewId || !userName) return;
-
-        signUp.mutate({
-          crewId: Number(crewId),
-          userName,
-          ...(instaId && { instagramId: instaId }),
-        });
-      },
-      [crewList?.crewDetails, signUp]
-    );
-
     const isCrewNameError =
       !!formErrors.crew?.type || formMethods.getValues('crew') === '' || !formMethods.getValues('crew');
     const isUserNameError = !!formErrors.userName?.type || !formMethods.getValues('userName');
