@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --experimental-https",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 80",
     "profile": "node --prof node_modules/.bin/next dev",
     "profileTest": "NODE_OPTIONS='--inspect' next dev",
     "lint": "next lint",
