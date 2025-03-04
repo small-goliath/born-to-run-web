@@ -34,7 +34,7 @@ export default function CommentList({ feedId }: Props) {
               <ReComment
                 feedId={feedId}
                 commentDate={comment.registeredAt}
-                commentId={comment.id}
+                id={comment.id}
                 contents={comment.contents}
                 isMyComment={comment.isMyComment}
                 writer={comment.writer}
