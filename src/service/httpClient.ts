@@ -1,7 +1,8 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-import HttpError from './httpError';
-import { refreshToken } from './auth';
 import { deleteCookie, getCookie, setCookie } from 'cookies-next';
+import https from 'https';
+import { refreshToken } from './auth';
+import HttpError from './httpError';
 
 export const ACCESS_TOKEN = 'access_token';
 
@@ -9,13 +10,29 @@ export const SSR_BASE_URL = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1`;
 export const CSR_BASE_URL = '/api/v1/';
 const isServer = typeof window === 'undefined';
 
+const isDevelopment = process.env.NODE_ENV === 'development';
+const clientCert = isDevelopment ? "" : `${process.env.NEXT_PUBLIC_CLIENT_CERT}`;
+const clientKey = isDevelopment ? "" : `${process.env.NEXT_PUBLIC_CLIENT_KEY}`;
+const httpsAgent = isDevelopment
+  ? undefined
+  : new https.Agent({
+      cert: clientCert,
+      key: clientKey,
+      rejectUnauthorized: false,
+      keepAlive: true
+    });
+
 // 토큰 재발급을 한 번만 시도합니다. (무제한 재 요청을 방지)
 type CustomAxiosRequestConfig = {
   _retry?: boolean;
 } & AxiosRequestConfig;
 
+console.log("isDevelopment: " + isDevelopment)
+console.log("clientCert: " + clientCert)
+console.log("clientKey: " + clientKey)
 export const api = axios.create({
   baseURL: isServer ? SSR_BASE_URL : CSR_BASE_URL,
+  httpsAgent: httpsAgent
 });
 
 api.interceptors.request.use(
