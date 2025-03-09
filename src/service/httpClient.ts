@@ -15,6 +15,7 @@ type CustomAxiosRequestConfig = {
 
 export const api = axios.create({
   baseURL: isServer ? SSR_BASE_URL : CSR_BASE_URL,
+  timeout: 5000,
 });
 
 api.interceptors.request.use(
