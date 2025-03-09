@@ -28,24 +28,24 @@ export const api = axios.create({
   httpsAgent: httpsAgent
 });
 
-api.interceptors.request.use(
-  async (config) => {
-    const beforeAccessToken = getCookie(ACCESS_TOKEN);
+// api.interceptors.request.use(
+//   async (config) => {
+//     const beforeAccessToken = getCookie(ACCESS_TOKEN);
 
-    if (beforeAccessToken) {
-      config.headers.Authorization = `Bearer ${beforeAccessToken}`;
-    }
-    return config;
-  },
-  (error) => {
-    if (error instanceof AxiosError) {
-      const { response } = error;
-      const httpError = new HttpError(response?.status, response?.statusText).errorData;
-      throw httpError;
-    }
-    throw new Error('네트워크 통신 에러 발생');
-  }
-);
+//     if (beforeAccessToken) {
+//       config.headers.Authorization = `Bearer ${beforeAccessToken}`;
+//     }
+//     return config;
+//   },
+//   (error) => {
+//     if (error instanceof AxiosError) {
+//       const { response } = error;
+//       const httpError = new HttpError(response?.status, response?.statusText).errorData;
+//       throw httpError;
+//     }
+//     throw new Error('네트워크 통신 에러 발생');
+//   }
+// );
 
 api.interceptors.response.use(
   (response: AxiosResponse) => {
