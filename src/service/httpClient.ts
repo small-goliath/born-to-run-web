@@ -1,6 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { deleteCookie, getCookie, setCookie } from 'cookies-next';
-import https from 'https';
 import { refreshToken } from './auth';
 import HttpError from './httpError';
 
@@ -11,12 +10,6 @@ export const CSR_BASE_URL = '/api/v1/';
 const isServer = typeof window === 'undefined';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
-const httpsAgent = isDevelopment
-  ? undefined
-  : new https.Agent({
-      maxVersion: "TLSv1.3",
-      minVersion: "TLSv1.2"
-    });
 
 // 토큰 재발급을 한 번만 시도합니다. (무제한 재 요청을 방지)
 type CustomAxiosRequestConfig = {
