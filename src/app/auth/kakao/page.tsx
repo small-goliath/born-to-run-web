@@ -3,7 +3,12 @@
  */
 
 import AuthKakao from '@/components/AuthKakao';
+import { Suspense } from 'react';
 
 export default function AuthKakaoPage() {
-  return <AuthKakao />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AuthKakao />
+    </Suspense>
+  );
 }
