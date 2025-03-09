@@ -44,17 +44,13 @@ type Refresh = {
   error?: string;
 };
 
-export const refreshToken = async (token: string) => {
+export const refreshToken = async () => {
   try {
-    const result = await (
-      await axios.get<Promise<Refresh>>('/api/refresh', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-    ).data;
-    console.log('service auth refreshToken result', result);
-    return result;
+    const status = await (
+      await axios.get<Promise<Refresh>>('/api/v1/users/refresh')
+    ).status;
+    console.log('service auth refreshToken status', status);
+    return status;
   } catch (error) {
     return handleNetworkError(error);
   }
