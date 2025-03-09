@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 function filterPrivatePath(path: string) {
   const privatePathPatterns = [
@@ -13,6 +13,10 @@ function filterPrivatePath(path: string) {
 export async function middleware(request: NextRequest) {
   console.log('middleware ', request.nextUrl.pathname);
   const isPrivate = filterPrivatePath(request.nextUrl.pathname);
+
+  if (isPrivate) {
+    return NextResponse.redirect(new URL('/', request.url));
+  }
 }
 
 export const config = {

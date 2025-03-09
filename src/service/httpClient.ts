@@ -19,7 +19,10 @@ export const api = axios.create({
 });
 
 api.interceptors.request.use(
-  async (error) => {
+  async (config) => {
+    return config;
+  },
+  (error) => {
     if (error instanceof AxiosError) {
       const { response } = error;
       const httpError = new HttpError(response?.status, response?.statusText).errorData;
