@@ -40,17 +40,20 @@ export const signIn = async (kakaoAuthCode: string | null) => {
 
 type Refresh = {
   isSuccess: boolean;
-  jwt?: string;
+  status?: Number;
   error?: string;
 };
 
-export const refreshToken = async () => {
+export const refreshToken = async (): Promise<Refresh> => {
   try {
-    const status = await (
-      await axios.get<Promise<Refresh>>('/api/v1/users/refresh')
-    ).status;
-    console.log('service auth refreshToken status', status);
-    return status;
+    const response = await axios.get<Refresh>('/api/v1/users/refresh');
+    console.log('service auth refreshToken status', response.status);
+    
+    return {
+      isSuccess: response.status === 201,
+      status: response.data.status,
+      error: response.data.error
+    };
   } catch (error) {
     return handleNetworkError(error);
   }
@@ -125,5 +128,5 @@ export const crews = async () => {
   return result;
 };
 
-export type { Crew, Crews, SignOut, SignUpData, SignIn };
+export type { Crew, Crews, SignIn, SignOut, SignUpData };
 

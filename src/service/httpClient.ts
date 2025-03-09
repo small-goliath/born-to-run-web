@@ -49,8 +49,8 @@ api.interceptors.response.use(
       originRequest._retry = true;
 
       try {
-        const { status } = await refreshToken();
-        if (!status) {
+        const { isSuccess } = await refreshToken();
+        if (!isSuccess) {
           throw new HttpError(401, '재 로그인이 필요합니다.');
         }
 
