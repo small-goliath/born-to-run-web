@@ -9,8 +9,6 @@ export const SSR_BASE_URL = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1`;
 export const CSR_BASE_URL = '/api/v1/';
 const isServer = typeof window === 'undefined';
 
-const isDevelopment = process.env.NODE_ENV === 'development';
-
 // 토큰 재발급을 한 번만 시도합니다. (무제한 재 요청을 방지)
 type CustomAxiosRequestConfig = {
   _retry?: boolean;
@@ -18,7 +16,6 @@ type CustomAxiosRequestConfig = {
 
 export const api = axios.create({
   baseURL: isServer ? SSR_BASE_URL : CSR_BASE_URL,
-  // httpsAgent: httpsAgent
 });
 
 api.interceptors.request.use(
