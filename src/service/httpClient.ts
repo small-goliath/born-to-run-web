@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import https from 'https';
 import { refreshToken } from './auth';
 import HttpError from './httpError';
 
@@ -13,9 +14,21 @@ type CustomAxiosRequestConfig = {
   _retry?: boolean;
 } & AxiosRequestConfig;
 
+const isDevelopment = process.env.NODE_ENV === 'development';
+const clientCtr = isDevelopment ? undefined : `${process.env.NEXT_PUBLIC_CLIENT_CTR}`;
+
+const httpsAgent = isDevelopment
+  ? undefined
+  : new https.Agent({
+      cert: clientCtr,
+      rejectUnauthorized: false,
+      keepAlive: true
+    });
+
 export const api = axios.create({
   baseURL: isServer ? SSR_BASE_URL : CSR_BASE_URL,
   timeout: 5000,
+  httpsAgent: httpsAgent
 });
 
 api.interceptors.request.use(
