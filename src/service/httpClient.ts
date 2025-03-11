@@ -15,14 +15,14 @@ type CustomAxiosRequestConfig = {
 } & AxiosRequestConfig;
 
 const isDevelopment = process.env.NODE_ENV === 'development';
-const clientCtr = isDevelopment ? undefined : `${process.env.NEXT_PUBLIC_CLIENT_CTR}`;
-const clientCtrKey = isDevelopment ? undefined : `${process.env.NEXT_PUBLIC_CLIENT_CTR_KEY}`;
-
 const httpsAgent = isDevelopment
   ? undefined
   : new https.Agent({
-      cert: clientCtr,
-      key: clientCtrKey,
+      maxVersion: "TLSv1.3",
+      minVersion: "TLSv1.2",
+      cert: `${process.env.NEXT_PUBLIC_CLIENT_CTR}`,
+      key: `${process.env.NEXT_PUBLIC_CLIENT_CTR_KEY}`,
+      ca: `${process.env.NEXT_PUBLIC_CLIENT_CA}`,
       rejectUnauthorized: false,
       keepAlive: true
     });
