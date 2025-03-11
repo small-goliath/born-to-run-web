@@ -16,11 +16,13 @@ type CustomAxiosRequestConfig = {
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 const clientCtr = isDevelopment ? undefined : `${process.env.NEXT_PUBLIC_CLIENT_CTR}`;
+const clientCtrKey = isDevelopment ? undefined : `${process.env.NEXT_PUBLIC_CLIENT_CTR_KEY}`;
 
 const httpsAgent = isDevelopment
   ? undefined
   : new https.Agent({
       cert: clientCtr,
+      key: clientCtrKey,
       rejectUnauthorized: false,
       keepAlive: true
     });
