@@ -1,4 +1,6 @@
+import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
+import { ACCESS_TOKEN } from './service/httpClient';
 
 function filterPrivatePath(path: string) {
   const privatePathPatterns = [
@@ -11,10 +13,11 @@ function filterPrivatePath(path: string) {
 }
 
 export async function middleware(request: NextRequest) {
-  console.log('middleware ', request.nextUrl.pathname);
+  const token = cookies().get(ACCESS_TOKEN);
+  console.log('middleware ', token);
   const isPrivate = filterPrivatePath(request.nextUrl.pathname);
 
-  if (isPrivate) {
+  if (!token && isPrivate) {
     return NextResponse.redirect(new URL('/', request.url));
   }
 }

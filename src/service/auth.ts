@@ -40,20 +40,21 @@ export const signIn = async (kakaoAuthCode: string | null) => {
 
 type Refresh = {
   isSuccess: boolean;
-  status?: Number;
+  jwt?: string;
   error?: string;
 };
 
-export const refreshToken = async (): Promise<Refresh> => {
+export const refreshToken = async (token: string) => {
   try {
-    const response = await axios.get<Refresh>('/api/v1/users/refresh');
-    console.log('service auth refreshToken status', response.status);
-    
-    return {
-      isSuccess: response.status === 201,
-      status: response.data.status,
-      error: response.data.error
-    };
+    const result = await (
+      await axios.get<Promise<Refresh>>('/api/refresh', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    ).data;
+    console.log('service auth refreshToken result', result);
+    return result;
   } catch (error) {
     return handleNetworkError(error);
   }
