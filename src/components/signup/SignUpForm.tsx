@@ -57,6 +57,8 @@ export default function SignUpForm() {
 
 
   setCookie(ACCESS_TOKEN, accessToken);
+  console.log("accessToken ", accessToken);
+  console.log("isMember ", isMember);
   if (isMember === 'true') {
     console.log('signup form exit!');
     router.replace('/');
