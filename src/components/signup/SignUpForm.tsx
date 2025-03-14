@@ -2,7 +2,9 @@
 
 import useAuth from '@/hooks/queries/useAuth';
 import { useModal } from '@/hooks/useModal';
+import { ACCESS_TOKEN } from '@/service/httpClient';
 import { useLoginStateStore } from '@/store/useLoginStateStore';
+import { setCookie } from 'cookies-next';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -22,6 +24,7 @@ export type SignUpForm = {
 export default function SignUpForm() {
   const searchParams = useSearchParams();
   const isMember = searchParams.get('isMember');
+  const accessToken = searchParams.get('accessToken');
   const router = useRouter();
   const modal = useModal();
   const formMethods = useForm<SignUpForm>();
@@ -52,6 +55,8 @@ export default function SignUpForm() {
     [crewList?.crewDetails, signUp]
   );
 
+
+  setCookie(ACCESS_TOKEN, accessToken);
   if (isMember === 'true') {
     console.log('signup form exit!');
     router.replace('/');
